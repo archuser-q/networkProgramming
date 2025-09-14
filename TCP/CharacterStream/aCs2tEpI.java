@@ -1,10 +1,9 @@
 package TCP.CharacterStream;
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+
+import java.io.*;
 import java.net.*;
-public class aCs2tEpI {
+
+public class aCs2tEpI{
     public static void main(String[] args){
         String studentCode = "B22DCVT419";
         String qCode = "aCs2tEpI";
@@ -16,55 +15,46 @@ public class aCs2tEpI {
             BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             BufferedReader reader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         ){
-            //a)
             String toSend = studentCode + ";" + qCode;
             writer.write(toSend);
             writer.newLine();
             writer.flush();
-            //b)
-            String received = reader.readLine();
-            //c)
-            String[] words = received.split(" ");
-            StringBuilder sb = new StringBuilder();
-            for (String word:words){
-                if(sb.length()>0){
-                    sb.append(" ");
-                }
-                String reversed = new StringBuilder(word).reverse().toString();
-                sb.append(applyRLE(reversed));
+
+            String[] words = reader.readLine().split(" ");
+            StringBuilder response = new StringBuilder();
+            for (String word: words){
+                StringBuilder sb = new StringBuilder(word);
+                response.append(RLE(sb.reverse()));
             }
-            writer.write(sb.toString());
+            writer.write(response.toString());
             writer.newLine();
             writer.flush();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    private static String applyRLE(String reversed){
-        if (reversed.isEmpty()) return "";
-
-        StringBuilder sb = new StringBuilder();
-        char prev = reversed.charAt(0);
+    private static String RLE(StringBuilder s){
         int count=1; 
-
-        for (int i=1; i<reversed.length(); i++){
-            char current = reversed.charAt(i);
-            if (current == count){
+        char temp = s.charAt(0);
+        StringBuilder sb = new StringBuilder();
+        for (int i=1; i<s.length(); i++){
+            char current = s.charAt(i);
+            if (current == temp){
                 count++;
             }
             else{
-                sb.append(prev);
+                sb.append(temp);
                 if (count>1){
                     sb.append(count);
                 }
-                prev = current;
-                count=1;
-            }
+                temp = current; 
+                count = 1;            }
         }
-        sb.append(prev);
-        if(count>1){
+        sb.append(temp);
+        if (count>1){
             sb.append(count);
         }
+        sb.append(" ");
         return sb.toString();
     }
 }
