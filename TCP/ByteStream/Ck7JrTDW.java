@@ -35,6 +35,7 @@ public class Ck7JrTDW {
                 writer.flush();
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
