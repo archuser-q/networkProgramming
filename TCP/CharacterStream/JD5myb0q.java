@@ -21,15 +21,21 @@ public class JD5myb0q{
             writer.flush();
 
             String[] words = reader.readLine().split(", ");
-            String[] response = new String[words.length];
-            for (String word: words){
+            StringBuilder response = new StringBuilder();
+            for (String word:words){
                 if (word.endsWith(".edu")){
-                    writer.write(word);
-                    writer.newLine();
-                    writer.flush();
+                    response.append(word);
+                    response.append(", ");
                 }
             }
+            if (response.length()>0){
+                response.setLength(response.length()-2);
+            }
+            writer.write(response.toString());
+            writer.newLine();
+            writer.flush();
         } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
