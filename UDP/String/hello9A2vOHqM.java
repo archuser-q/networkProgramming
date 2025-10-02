@@ -1,10 +1,10 @@
 package UDP.String;
 
+import java.io.*;
 import java.net.*;
 import java.util.*;
-import java.io.*;
 
-public class 9A2vOHqM {
+public class hello9A2vOHqM {
     public static void main(String[] args){
         String studentCode = "B22DCVT419";
         String qCode = "9A2vOHqM";
@@ -31,13 +31,13 @@ public class 9A2vOHqM {
             String[] characterSequence = rawBuffer[1].split("\\s+");
             
             List<String> wordList = Arrays.asList(characterSequence);
-            Collections.sort(wordList, Collections.reverseOrder());
+            Collections.sort(wordList, (a, b) -> b.compareToIgnoreCase(a));
             StringBuilder sb = new StringBuilder();
             for (String i:wordList){
                 sb.append(i);
                 sb.append(",");
             }
-            String response = requestId+";"+sb.toString();
+            String response = requestId+";"+sb.deleteCharAt(sb.length()-1).toString();
             byte[] responseBuffer = response.getBytes();
             DatagramPacket responsePacket = new DatagramPacket(responseBuffer, responseBuffer.length, address, port);
             socket.send(responsePacket);
