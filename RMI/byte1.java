@@ -13,14 +13,15 @@ public class byte1 {
 
             byte[] data = service.requestData(studentCode, qCode);
 
-            int shift = data.length;
+            int shift = data.length; 
 
-            byte[] encoded = new byte[data.length];
+            byte[] shiftArray = new byte[data.length];
 
             for (int i=0; i<data.length; i++){
-                encoded[i] = (byte)(data[i]+shift);
+                shiftArray[i] = (byte)(data[i]+shift);
             }
-            service.submitData(studentCode, qCode, encoded);
+
+            service.submitData(studentCode, qCode, shiftArray);
         } catch (Exception e) {
             e.printStackTrace();
         }
